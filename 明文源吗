@@ -774,8 +774,6 @@ export default {
       const 请求路径 = 请求网址731.pathname;
       const 节点信息 = 请求735.cf ? `${请求735.cf.country || ''}-${请求735.cf.city || ''} (${请求735.cf.colo || ''})` : '';
       const 客户端UA = 请求735.headers.get('User-Agent') || '';
-      
-      console.log(`[HTTP/WS请求] 来源IP: ${客户端IP} | 访问域名: ${访问域名} | 路径: ${请求路径} | 节点: ${节点信息} | UA: ${客户端UA.substring(0, 50)}`);
 
       await 处理值键值值(本地值734);
       
