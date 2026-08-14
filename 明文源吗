@@ -1001,7 +1001,7 @@ export default {
       if (请求735.method === 'GET') {
         // 处理 /{UUID}/region 或 /{自定义路径}/region
         if (网址698.pathname.endsWith('/region')) {
-          const 路径部分列表683 = 网址698.pathname.split('/').filter(参数值682 => 参数值682);
+          const 路径部分列表683 = 网址698.pathname.split('/').filter(Boolean);
           if (路径部分列表683.length === 2 && 路径部分列表683[1] === 'region') {
             const 路径值681 = 路径部分列表683[0];
             let 是否有效680 = false;
@@ -1010,8 +1010,8 @@ export default {
               const 清理自定义路径679 = 自定义路径.trim().startsWith('/') ? 自定义路径.trim().substring(1) : 自定义路径.trim();
               是否有效680 = 路径值681 === 清理自定义路径679;
             } else {
-              // 使用UUID路径
-              是否有效680 = 是否有效格式(路径值681) && 路径值681 === 认证令牌;
+              // 使用多用户UUID路径
+              是否有效680 = 全局用户Map.has(路径值681.toLowerCase());
             }
             if (是否有效680) {
               const 本地值678 = 获取配置值('p', 本地值734.p || 本地值734.P);
@@ -1066,7 +1066,7 @@ export default {
 
         // 处理 /{UUID}/test-api 或 /{自定义路径}/test-api
         if (网址698.pathname.endsWith('/test-api')) {
-          const 路径部分列表676 = 网址698.pathname.split('/').filter(参数值675 => 参数值675);
+          const 路径部分列表676 = 网址698.pathname.split('/').filter(Boolean);
           if (路径部分列表676.length === 2 && 路径部分列表676[1] === 'test-api') {
             const 路径值 = 路径部分列表676[0];
             let 是否有效 = false;
@@ -1076,7 +1076,7 @@ export default {
               是否有效 = 路径值 === 清理自定义路径674;
             } else {
               // 使用UUID路径
-              是否有效 = 是否有效格式(路径值) && 路径值 === 认证令牌;
+              是否有效 = 全局用户Map.has(路径值.toLowerCase());
             }
             if (是否有效) {
               try {
@@ -1807,9 +1807,9 @@ document.addEventListener('DOMContentLoaded', function () {
             }
           }
           if (网址698.pathname.includes('/sub')) {
-            const 路径部分列表 = 网址698.pathname.split('/');
-            if (路径部分列表.length === 2 && 路径部分列表[1] === 'sub') {
-              const 用户656 = 路径部分列表[0].substring(1).toLowerCase();
+            const 路径部分列表 = 网址698.pathname.split('/').filter(Boolean);
+            if (路径部分列表.length >= 2 && 路径部分列表[1] === 'sub') {
+              const 用户656 = 路径部分列表[0].toLowerCase();
               if (是否有效格式(用户656)) {
                 const 目标用户 = 全局用户Map.get(用户656);
                 if (目标用户) {
